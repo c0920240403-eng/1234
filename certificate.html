@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學習證書 - SDGs 性別平權</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .certificate-container {
+            background: #fff;
+            padding: 30px;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .certificate {
+            border: 2px solid #4CAF50;
+            padding: 40px;
+            position: relative;
+            text-align: center;
+            font-size: 1.2em;
+            border-radius: 10px;
+        }
+        .certificate h1 {
+            font-size: 2.5em;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+        .certificate p {
+            font-size: 1.5em;
+        }
+        .certificate .name {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-container {
+            margin: 20px 0;
+        }
+        .form-container input {
+            padding: 10px;
+            font-size: 1.2em;
+            width: 80%;
+            max-width: 400px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        #print-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #print-btn:hover {
+            background-color: #45a049;
+        }
+        #certificate-text {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="certificate-container">
+    <h2>恭喜成為 SDGs 性別平權小達人！</h2>
+    <div class="form-container">
+        <label for="name-input" style="font-size: 1.5em;">請輸入你的姓名：</label>
+        <input type="text" id="name-input" placeholder="輸入姓名" oninput="updateName()" />
+    </div>
+
+    <div id="certificate-text" class="certificate">
+        <h1>學習證書</h1>
+        <p>證明 [<span id="user-name" class="name">______</span>] 完成了「SDGs 性別平權」學習課程，成為性別平權小達人！</p>
+        <p>本證書授予您積極參與並理解性別平等的重要性。</p>
+    </div>
+
+    <button id="print-btn" style="display:none;" onclick="window.print()">下載 / 列印 證書</button>
+</div>
+
+<script>
+    function updateName() {
+        const nameInput = document.getElementById("name-input").value;
+        const userNameSpan = document.getElementById("user-name");
+        const printBtn = document.getElementById("print-btn");
+        const certificateText = document.getElementById("certificate-text");
+
+        // 顯示證書，並填入使用者姓名
+        if (nameInput.trim() !== "") {
+            userNameSpan.textContent = nameInput;
+            certificateText.style.display = "block";
+            printBtn.style.display = "inline-block";
+        } else {
+            certificateText.style.display = "none";
+            printBtn.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
