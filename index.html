@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>SDGs 性別平權</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", sans-serif;
+      /* 背景改成圖片 */
+      background: url('test.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      z-index: 20;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .village {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      margin-top: 50px;
+    }
+
+    /* 精緻茅草屋 CSS */
+    .hut {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.2s, opacity 0.5s;
+    }
+
+    .hut:hover {
+      transform: scale(1.1);
+    }
+
+    .hut .roof {
+      width: 0;
+      height: 0;
+      border-left: 40px solid transparent;
+      border-right: 40px solid transparent;
+      border-bottom: 30px solid #a0522d;
+    }
+
+    .hut .body {
+      width: 80px;
+      height: 50px;
+      background: #deb887;
+      border: 2px solid #8b4513;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      position: relative;
+    }
+
+    .hut .door {
+      width: 20px;
+      height: 30px;
+      background: #654321;
+      position: absolute;
+      bottom: 0;
+      left: 30px;
+      border-radius: 3px;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      width: 350px;
+      display: none;
+      z-index: 10;
+    }
+
+    .popup button {
+      display: block;
+      margin-top: 10px;
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 5;
+    }
+
+    .result {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>SDGs 性別平權</div>
+  <div id="score">答對題數：0</div>
+</header>
+
+<div class="village">
+  <!-- 10 棟精緻茅草屋 -->
+  <div class="hut" style="top:100px; left:150px;" data-id="0">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:200px; left:400px;" data-id="1">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:300px; left:250px;" data-id="2">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:150px; left:650px;" data-id="3">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:350px; left:500px;" data-id="4">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:250px; left:800px;" data-id="5">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:400px; left:200px;" data-id="6">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:450px; left:600px;" data-id="7">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:500px; left:900px;" data-id="8">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+  <div class="hut" style="top:350px; left:1000px;" data-id="9">
+    <div class="roof"></div>
+    <div class="body"><div class="door"></div></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="popup" id="popup">
+  <div id="question"></div>
+  <div id="options"></div>
+</div>
+
+<div class="popup" id="resultPopup">
+  <div class="result" id="resultText"></div>
+  <button id="retryBtn" class="btn" style="display:none;">重新挑戰</button>
+  <button id="nextBtn" class="btn" style="display:none;" onclick="location.href='level2.html'">前往下一關</button>
+</div>
+
+<script>
+const questions = [
+  { q: "性別平權的目標是什麼？", options: ["讓女性比男性更有優勢", "讓每個人都有平等機會", "限制男性權利"], correct: 1 },
+  { q: "哪一個行為有助於促進性別平等？", options: ["讓男生主導會議", "尊重不同性別的意見", "只聘用女性"], correct: 1 },
+  { q: "下列哪一項屬於性別刻板印象？", options: ["女生應該會做家事", "每個人都能做任何工作", "尊重多元性別"], correct: 0 },
+  { q: "在教育上，性別平權的意義是？", options: ["只教育男孩", "男女皆可接受教育", "女生不必上學"], correct: 1 },
+  { q: "在職場上推動性別平權可以？", options: ["提升創新與效率", "造成混亂", "讓男性失業"], correct: 0 },
+  { q: "以下哪一項不符合性別平權？", options: ["男性照顧小孩被嘲笑", "女性可擔任領導職", "尊重跨性別者"], correct: 0 },
+  { q: "性別平權的英文是？", options: ["Gender Equality", "Gender War", "Gender Limit"], correct: 0 },
+  { q: "以下哪一個行為促進性別平權？", options: ["家務由雙方共同分擔", "女生不必上班", "男生不能哭"], correct: 0 },
+  { q: "推動性別平權屬於聯合國哪個目標？", options: ["SDG 1", "SDG 5", "SDG 10"], correct: 1 },
+  { q: "哪一種文化支持性別平權？", options: ["鼓勵多元包容", "強調男尊女卑", "排斥非二元性別"], correct: 0 }
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+const scoreDisplay = document.getElementById("score");
+const popup = document.getElementById("popup");
+const overlay = document.getElementById("overlay");
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const resultPopup = document.getElementById("resultPopup");
+const resultText = document.getElementById("resultText");
+const retryBtn = document.getElementById("retryBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+document.querySelectorAll(".hut").forEach(hut => {
+  hut.addEventListener("click", () => {
+    const id = parseInt(hut.dataset.id);
+    if (answered[id]) {
+      alert("這間茅草屋的題目已經回答過了！");
+      return;
+    }
+    showQuestion(id);
+  });
+});
+
+function showQuestion(id) {
+  const q = questions[id];
+  questionEl.textContent = q.q;
+  optionsEl.innerHTML = "";
+  q.options.forEach((opt, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = opt;
+    btn.onclick = () => checkAnswer(id, index);
+    optionsEl.appendChild(btn);
+  });
+  popup.style.display = "block";
+  overlay.style.display = "block";
+}
+
+function checkAnswer(id, choice) {
+  const q = questions[id];
+  if (choice === q.correct) {
+    alert("✅ 答對了！");
+    score++;
+  } else {
+    alert("❌ 答錯了！");
+  }
+  answered[id] = true;
+  scoreDisplay.textContent = `答對題數：${score}`;
+
+  // 讓該茅草屋消失
+  const hut = document.querySelector(`.hut[data-id='${id}']`);
+  hut.style.opacity = 0;
+  setTimeout(() => hut.style.display = "none", 500);
+
+  closePopup();
+  if (answered.every(a => a)) endGame();
+}
+
+function closePopup() {
+  popup.style.display = "none";
+  overlay.style.display = "none";
+}
+
+function endGame() {
+  resultPopup.style.display = "block";
+  overlay.style.display = "block";
+  if (score >= 8) {
+    resultText.textContent = `太棒了！你答對了 ${score} 題，可以前往下一關！`;
+    nextBtn.style.display = "inline-block";
+  } else {
+    resultText.textContent = `你只答對了 ${score} 題，請再接再厲！`;
+    retryBtn.style.display = "inline-block";
+  }
+}
+
+retryBtn.onclick = () => location.reload();
+</script>
+</body>
+</html>
+
+
+
+
+
